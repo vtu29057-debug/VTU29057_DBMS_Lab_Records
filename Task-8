@@ -1,0 +1,80 @@
+Identify employee attributes: Employee_ID, Name, Department, Job_Title, Manager_ID, Hire_Date, Salary.
+Define relational schema: Employee (Employee_ID, Name, Department, Job_Title, Manager_ID, Hire_Date, Salary).
+Determine functional dependencies (FDs) between attributes:
+Employee_ID -> Name, Department, Job_Title, Manager_ID, Hire_Date, Salary
+Department -> Manager_ID
+Manager_ID -> Name
+
+
+Step 2: Convert to 1NF
+
+
+Eliminate repeating groups or arrays (none in this example).
+Create separate tables for each repeating group (none in this example).
+
+
+Step 3: Convert to 2NF
+
+
+Ensure each non-key attribute depends on the entire primary key.
+
+Move non-key attributes to separate tables if they depend on only part of the primary key.
+Create Department table: Department (Department_ID, Manager_ID, Name).
+Create Employee table: Employee (Employee_ID, Name, Department_ID, Job_Title, Hire_Date, Salary).
+OUTPUT:-
+Employee(Employee_ID, Name, Department_ID, Job_Title, Hire_Date, Salary)
+Department(Department_ID, Manager_ID, Name)
+
+
+Step 4: Convert to 3NF
+
+
+Ensure there are no transitive dependencies.
+Move non-key attributes to separate tables if they depend on another non-key attribute.
+Create Manager table: Manager (Manager_ID, Name).
+Update Department table: Department (Department_ID, Manager_ID).
+
+
+Step 5: Convert to BCNF
+
+
+Ensure every determinant is a candidate key.
+Check for overlapping candidate keys.
+Decompose relations to eliminate redundancy.
+
+
+
+- No further decomposition needed.
+OUTPUT:-
+Manager(Manager_ID, Name) Department(Department_ID, Manager_ID)
+Employee(Employee_ID, Name, Department_ID, Job_Title, Hire_Date, Salary)
+
+
+Using Griffith Tool
+
+
+Input relational schema and functional dependencies.
+Griffith tool generates a dependency graph.
+Analyze the graph to identify normalization issues.
+Apply normalization rules to transform the schema.
+Verify the resulting schema meets BCNF criteria.
+
+
+Griffith Tool Steps
+
+
+Create a new project in Griffith.
+Define the relational schema and FDs.
+Run the "Dependency Graph" tool.
+Analyze the graph for normalization issues.
+Apply transformations using the "Normalize" tool.
+
+Verify BCNF compliance using the "BCNF Check" tool.
+
+
+Normalized Schema
+
+
+Employee (Employee_ID, Name, Department_ID, Job_Title, Hire_Date, Salary).
+Department (Department_ID, Manager_ID).
+Manager (Manager_ID, Name).
