@@ -1,0 +1,48 @@
+Recovering a NOARCHIVELOG Database
+
+-- Full Database Backup
+
+BACKUP DATABASE [database_name] TO DISK = 'backup_file.bak' WITH INIT, NAME = 'Full Database Backup', STATS = 10;
+
+
+-- Incremental Backup
+
+BACKUP DATABASE [database_name] TO DISK = 'incremental_backup.bak'
+WITH DIFFERENTIAL, NAME = 'Incremental Database Backup', STATS
+= 10;
+
+
+
+-- Restore Database
+
+RESTORE DATABASE [database_name] FROM DISK = 'backup_file.bak' WITH REPLACE;
+
+
+-- Apply Incremental Backup
+
+RESTORE DATABASE [database_name] FROM DISK = 'incremental_backup.bak' WITH REPLACE;
+
+-- Recover and Open Database
+
+RECOVER DATABASE [database_name];
+
+ALTER DATABASE [database_name] SET ONLINE;
+
+
+
+Scenario 2: Restoring the Server Parameter File
+
+BACKUP SERVER PARAMETER FILE TO FILE = 'spfile.bak'; STARTUP MOUNT;
+RESTORE SERVER PARAMETER FILE FROM FILE = 'spfile.bak'; SHUTDOWN;
+STARTUP;
+
+Scenario 3: Recovery with a Backup Control File BACKUP CONTROLFILE TO FILE = 'controlfile.bak'; STARTUP MOUNT;
+RESTORE CONTROLFILE FROM FILE = 'controlfile.bak'; RECOVER DATABASE USING BACKUP CONTROLFILE; ALTER DATABASE OPEN RESETLOGS;
+
+Output
+BACKUP CONTROLFILE completed successfully.
+CONTROLFILE loss simulated.
+RESTORE CONTROLFILE completed successfully.
+RECOVER DATABASE USING BACKUP CONTROLFILE completed
+successfully.
+ALTER DATABASE OPEN RESETLOGS
